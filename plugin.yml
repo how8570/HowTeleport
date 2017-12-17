@@ -1,0 +1,11 @@
+name: HowTeleport
+version: 0.1
+main: me.howTeleport.com.Main
+author: how8570
+commands:
+  htp:
+    description: HowTP plugin.
+    usage: "/htp <command> <args>"
+  spawn:
+    description: HowTP spawn.
+    usage: "/spawn"
