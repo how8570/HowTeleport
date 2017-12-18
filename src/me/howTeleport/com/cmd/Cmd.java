@@ -43,12 +43,28 @@ public class Cmd  implements CommandExecutor {
 			 try{
 					Player targetPlayer = player.getServer().getPlayer(args[0]);
 			        Location targetPlayerLocation = targetPlayer.getLocation();
+			        
+			        TextComponent acceptButton = new TextComponent("【接受請求】");
+					acceptButton.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/htp accept " + targetPlayer.getDisplayName() ) );
+					acceptButton.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("接受玩家 " + player.getDisplayName() + "傳送至你身邊的請求" ).create() ));
+					acceptButton.setColor( net.md_5.bungee.api.ChatColor.GREEN );
+					
+					TextComponent denyButton = new TextComponent("【拒絕請求】");
+					denyButton.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/htp deny " + targetPlayer.getDisplayName() ) );
+					denyButton.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("拒絕來自 " + player.getDisplayName() + " 的傳送請求" ).create() ));
+					denyButton.setColor( net.md_5.bungee.api.ChatColor.RED );
+					
+					TextComponent text = new TextComponent("     ");
+					text.addExtra(acceptButton);
+					text.addExtra(new TextComponent("           "));
+					text.addExtra(denyButton);
+			        
 			        player.sendMessage(ChatColor.GREEN + "已成功傳送請求給 " + ChatColor.GOLD + targetPlayer.getDisplayName() + ChatColor.GREEN + " 請等待回應" );
 			        targetPlayer.playSound(targetPlayerLocation, Sound.ENTITY_ARROW_HIT_PLAYER , 10 , 1);
 			        targetPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "===============================================");
 			        targetPlayer.sendMessage("");
 			        targetPlayer.sendMessage("        玩家 " + player.getDisplayName() + " 請求傳送至您身邊");
-			        targetPlayer.sendMessage(ChatColor.GREEN + "     【接受請求】           " + ChatColor.RED + "【拒絕請求】");
+			        targetPlayer.spigot().sendMessage(text);
 			        targetPlayer.sendMessage("");
 			        targetPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "===============================================");
 			        
@@ -76,20 +92,25 @@ public class Cmd  implements CommandExecutor {
 					
 					TextComponent acceptButton = new TextComponent("【接受請求】");
 					acceptButton.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/htp i accept " + targetPlayer.getDisplayName() ) );
-					acceptButton.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("按下後將直接傳送至 " + targetPlayer.getDisplayName() + "身邊" ).create() ));
+					acceptButton.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("按下後將直接傳送至 " + player.getDisplayName() + "身邊" ).create() ));
 					acceptButton.setColor( net.md_5.bungee.api.ChatColor.GREEN );
 					
-					TextComponent rejectButton = new TextComponent("【拒絕請求】");
-					acceptButton.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/htp i reject " + targetPlayer.getDisplayName() ) );
-					acceptButton.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("拒絕來自 " + targetPlayer.getDisplayName() + " 的傳送邀請" ).create() ));
-					acceptButton.setColor( net.md_5.bungee.api.ChatColor.RED );
+					TextComponent denyButton = new TextComponent("【拒絕請求】");
+					denyButton.setClickEvent(new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/htp i deny " + targetPlayer.getDisplayName() ) );
+					denyButton.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("拒絕來自 " + player.getDisplayName() + " 的傳送邀請" ).create() ));
+					denyButton.setColor( net.md_5.bungee.api.ChatColor.RED );
+					
+					TextComponent text = new TextComponent("     ");
+					text.addExtra(acceptButton);
+					text.addExtra(new TextComponent("           "));
+					text.addExtra(denyButton);
 					
 					player.sendMessage(ChatColor.GREEN + "已成功傳送請求給 " + ChatColor.GOLD + targetPlayer.getDisplayName() + ChatColor.GREEN + " 請等待回應" );
 					targetPlayer.playSound(targetPlayerLocation, Sound.ENTITY_ARROW_HIT_PLAYER , 10 , 1);
 					targetPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "===============================================");
 					targetPlayer.sendMessage("");
-					targetPlayer.sendMessage("        您被邀請傳送至玩家 " + player.getDisplayName() + " 身邊");
-					targetPlayer.sendMessage("     " + acceptButton +"           " + rejectButton);
+					targetPlayer.sendMessage("        您被邀請傳送至玩家 " + targetPlayer.getDisplayName() + " 身邊");
+					targetPlayer.spigot().sendMessage(text);
 					targetPlayer.sendMessage("");
 					targetPlayer.sendMessage(ChatColor.LIGHT_PURPLE + "===============================================");
 		
